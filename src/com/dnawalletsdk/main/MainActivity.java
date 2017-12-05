@@ -1,29 +1,37 @@
 package com.dnawalletsdk.main;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dnawalletsdk.Cryptography.Digest;
 import com.dnawalletsdk.Data.DataUtil;
 import com.dnawalletsdk.Http.MyHandler;
 import com.dnawalletsdk.info.AssetInfo;
+import com.dnawalletsdk.main.setting.PermissionSetting;
 import com.dnawalletsdk.sdk.Account;
 import com.dnawalletsdk.sdk.AccountAsset;
 import com.dnawalletsdk.sdk.GenerateWallet;
 import com.dnawalletsdk.sdk.NodeMsg;
 import com.example.dnawalletsdk.R;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.SyncStateContract.Constants;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,6 +61,8 @@ public class MainActivity extends Activity  {
 	public static final int SEND_TRANSACTION_SUCCESS = 40000;
 	public static final int SEND_TRANSACTION_FALSE = 50000;
 	
+
+	
 	private MainHandler handler = null;
 	
 	private MyHandler mAPP = null;
@@ -78,9 +88,35 @@ public class MainActivity extends Activity  {
 		openWallet.setOnClickListener(new openWallet_OnClickListener());
 		generateWallet.setOnClickListener(new generateWallet_OnClickListener());
 		chooseWallet.setOnClickListener(new chooseWallet_OnClickListener());
+		
+		permissionApplication(); 
 	}
 
-    class openWallet_OnClickListener implements OnClickListener  {  
+    @TargetApi(23)
+	private void permissionApplication() {
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+			return;
+		}
+//		//判断是否需要请求允许权限
+//		int hasPermision = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//		if (hasPermision != PackageManager.PERMISSION_GRANTED) {
+//			requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, PermissionSetting.QUEST_CODE_WRITE);
+//			}
+
+		List<String> deniedPerms = new ArrayList<String>();
+		for(int i=0;PermissionSetting.permArray!=null&&i<PermissionSetting.permArray.length;i++){
+			if(PackageManager.PERMISSION_GRANTED != checkSelfPermission(PermissionSetting.permArray[i])){
+				deniedPerms.add(PermissionSetting.permArray[i]);
+			}
+		}
+
+		int denyPermNum = deniedPerms.size();
+		if(denyPermNum != 0){
+			requestPermissions(deniedPerms.toArray(new String[denyPermNum]),PermissionSetting.QUEST_CODE_ALL);
+		}
+	}
+
+	class openWallet_OnClickListener implements OnClickListener  {  
         public void onClick(View v)  {  
 
         	//wallet =SQLiteDatabase.openOrCreateDatabase(Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/Wallet/wallet--9f7fe470-67bb-491a-87d0-692ac6c8bc76.db3", null);
@@ -142,12 +178,6 @@ public class MainActivity extends Activity  {
         	Intent intent = new Intent();  
         	intent.setClass(MainActivity.this,WalletGenerate.class);  
         	startActivity(intent);
-        	
-//        	String txData = "02000001bcd37fe93a216254fe744bc986e694d5a3deb2d04cf82afc6646edd0b9415d750000ffffffff0283739b896fab3165d42b469a96b94aacf8eda48cbd230f4cdc7ea6f364ec137a00e1f50500000000d56acbce893fc3d30f36c73d47cda2323d0ab5f583739b896fab3165d42b469a96b94aacf8eda48cbd230f4cdc7ea6f364ec137a1ae521a2040000005494c17eabcc44ff71f129a84fc5b0e986fbefe700000000";
-//        	String key = "802fc633c0cbd8ec7f935b61ba04eee78a3b5dcf707efe737312e11e22844575";
-//        	byte[] privateKey = DataUtil.HexStringToByteArray(key);
-//        	byte[] sign = Account.signatureData(txData,privateKey);
-//        	System.out.println(DataUtil.bytesToHexString(sign));
         }  
     }
     
@@ -171,8 +201,6 @@ public class MainActivity extends Activity  {
             }  
         }  
     }  
-    
-
 
 	public final class MainHandler extends Handler {
 		@Override
@@ -202,5 +230,7 @@ public class MainActivity extends Activity  {
             }
 		}
 	}
+	
+	
 	
 }
