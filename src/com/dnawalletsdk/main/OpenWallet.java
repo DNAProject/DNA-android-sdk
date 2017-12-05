@@ -75,7 +75,7 @@ public class OpenWallet extends Activity  {
         		}
         	}
             
-            String txData = Transaction.makeTransferTransaction(asset,MainActivity.account.publicKeyEncoded,transferAddress,transferAssetAmount,OpenWalletActivity);
+            String txData = Transaction.makeTransferTransaction(asset,MainActivity.account.publicKeyEncoded,transferAddress,transferAssetAmount);
             if(txData.equals("-1")) {
             	Toast.makeText(OpenWallet.this, "地址验证失败。", Toast.LENGTH_LONG).show();
             }else if(txData.equals("-2")) {

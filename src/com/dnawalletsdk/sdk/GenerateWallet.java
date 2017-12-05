@@ -107,7 +107,8 @@ public class GenerateWallet {
 		
 
 		String walletName = DataUtil.bytesToHexString(Digest.hash256(account.publicKeyEncoded)).substring(0,32);
-		String walletUrl = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/Wallet/wallet--"+walletName+".db3";
+		//String walletUrl = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/Wallet/wallet--"+walletName+".db3";
+		String walletUrl = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/wallet--"+walletName+".db3";
 		SQLiteDatabase wallet =SQLiteDatabase.openOrCreateDatabase(walletUrl, null);
 		
 	    wallet.execSQL("CREATE TABLE Account ( PublicKeyHash BINARY NOT NULL CONSTRAINT PK_Account PRIMARY KEY, PrivateKeyEncrypted VARBINARY NOT NULL );");  

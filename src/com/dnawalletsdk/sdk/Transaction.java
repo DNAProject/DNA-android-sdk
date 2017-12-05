@@ -56,7 +56,7 @@ public class Transaction {
 	 * @returns {*} : TxUnsignedData
 	 */
 	
-	public static String makeTransferTransaction(AssetInfo Asset, byte[] publicKeyEncoded, String toAddress, Double transferAssetAmount,Activity OpenWalletActivity){
+	public static String makeTransferTransaction(AssetInfo Asset, byte[] publicKeyEncoded, String toAddress, Double transferAssetAmount){
 		
 		byte[] ProgramHash = Base58.decode(toAddress);
 		try {

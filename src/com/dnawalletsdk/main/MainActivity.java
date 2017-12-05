@@ -91,6 +91,15 @@ public class MainActivity extends Activity  {
                 Toast.makeText(MainActivity.this, "请选择正确的钱包文件", Toast.LENGTH_SHORT).show();  
                 return;
         	}
+        	
+        	System.out.println("address："+walletAddressUrl);
+        	
+            if(walletAddressUrl.substring(0, 18).equals("/document/primary:")) {
+            	walletAddressUrl = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/"+walletAddressUrl.substring(18);
+            }
+        	System.out.println(walletAddressUrl);
+        
+        	
         	wallet = SQLiteDatabase.openOrCreateDatabase(walletAddressUrl, null);
         	
         	Password = passwordEditText.getText().toString();
@@ -98,7 +107,7 @@ public class MainActivity extends Activity  {
                 Toast.makeText(MainActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();  
                 return;
         	}
-   	
+
         	String privateKeyHexString = GenerateWallet.decryptWallet(wallet,Password);
         	
         	if(privateKeyHexString.equals("-1")) {
@@ -133,6 +142,12 @@ public class MainActivity extends Activity  {
         	Intent intent = new Intent();  
         	intent.setClass(MainActivity.this,WalletGenerate.class);  
         	startActivity(intent);
+        	
+//        	String txData = "02000001bcd37fe93a216254fe744bc986e694d5a3deb2d04cf82afc6646edd0b9415d750000ffffffff0283739b896fab3165d42b469a96b94aacf8eda48cbd230f4cdc7ea6f364ec137a00e1f50500000000d56acbce893fc3d30f36c73d47cda2323d0ab5f583739b896fab3165d42b469a96b94aacf8eda48cbd230f4cdc7ea6f364ec137a1ae521a2040000005494c17eabcc44ff71f129a84fc5b0e986fbefe700000000";
+//        	String key = "802fc633c0cbd8ec7f935b61ba04eee78a3b5dcf707efe737312e11e22844575";
+//        	byte[] privateKey = DataUtil.HexStringToByteArray(key);
+//        	byte[] sign = Account.signatureData(txData,privateKey);
+//        	System.out.println(DataUtil.bytesToHexString(sign));
         }  
     }
     

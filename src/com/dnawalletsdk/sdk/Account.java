@@ -109,15 +109,15 @@ public class Account {
      * Signature transaction unsigned Data.
      * 生成签名。
      *
-     * @param $data
-     * @param $privateKey
-     *
-     * @return {string}
+     * @param String txData
+	 * @param byte[] privateKey
+	 * 
+ 	 * @return byte[] signature
      */
-	public static byte[] signatureData(String txData, byte[] privateKey2) {
+	public static byte[] signatureData(String txData, byte[] privateKey) {
 		// TODO Auto-generated method stub
 	   ECDSASigner signer = new ECDSASigner();
-	   signer.init(true, new ECPrivateKeyParameters(new BigInteger(1, privateKey2), ECC.secp256r1));
+	   signer.init(true, new ECPrivateKeyParameters(new BigInteger(1, privateKey), ECC.secp256r1));
 	   BigInteger[] bi = signer.generateSignature(Digest.sha256(DataUtil.HexStringToByteArray(txData)));// dna
 	   byte[] signature = new byte[64];
 	   System.arraycopy(BigIntegers.asUnsignedByteArray(32, bi[0]), 0, signature, 0, 32);

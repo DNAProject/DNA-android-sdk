@@ -38,7 +38,7 @@ public class SendTransfer {
 
 	}
 
-	private static void SendTransactionData(final String txRawData) {
+	public static void SendTransactionData(final String txRawData) {
 		new Thread(new Runnable() {  
 			@Override  
 			public void run() {  
