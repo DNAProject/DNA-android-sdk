@@ -97,11 +97,6 @@ public class MainActivity extends Activity  {
 		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
 			return;
 		}
-//		//判断是否需要请求允许权限
-//		int hasPermision = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//		if (hasPermision != PackageManager.PERMISSION_GRANTED) {
-//			requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, PermissionSetting.QUEST_CODE_WRITE);
-//			}
 
 		List<String> deniedPerms = new ArrayList<String>();
 		for(int i=0;PermissionSetting.permArray!=null&&i<PermissionSetting.permArray.length;i++){
