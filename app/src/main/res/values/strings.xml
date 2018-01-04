@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">DNAWalletSDK</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="open_wallet">打开钱包</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="generate_wallet">生成钱包</string>
+    <string name="transfer_transaction">转账</string>
+    <string name="transfer_address">转账地址</string>
+    <string name="transfer_asset_amount">转账资产数量</string>
+    <string name="transfer_asset_name">请选择转账资产</string>
+    <string name="ok">确定</string>
+    <string name="cancle">取消</string>
+    <string name="choose_wallet">请选择钱包</string>
+</resources>
