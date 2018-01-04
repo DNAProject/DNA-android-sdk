@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿# DNA : JavaScript-SDK
 
 > Onchain DNA项目的JS-SDK。
@@ -144,3 +145,7 @@ public static String getNodeHeight(final String nodeAPI) {};
  */
 public static void SendTransactionData(final String txRawData) {};
 ```
+=======
+# DNASDKAndroid
+The DNA SDK of Android
+>>>>>>> d9a7ae504fc6d1dc9cf5b375c64cc310cbf26a15
