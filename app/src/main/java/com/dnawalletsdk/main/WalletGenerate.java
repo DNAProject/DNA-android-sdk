@@ -1,22 +1,16 @@
 package com.dnawalletsdk.main;
 
-import java.io.File;
-
-import com.dnawalletsdk.Data.DataUtil;
-import com.dnawalletsdk.sdk.Account;
-import com.dnawalletsdk.sdk.GenerateWallet;
-
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.dnawalletsdk.sdk.GenerateWallet;
+import com.dnawalletsdk.sdk.Account;
 
 public class WalletGenerate extends Activity  {
 

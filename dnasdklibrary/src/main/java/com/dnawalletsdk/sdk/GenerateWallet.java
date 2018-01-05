@@ -9,6 +9,7 @@ import com.dnawalletsdk.Cryptography.AES;
 import com.dnawalletsdk.Cryptography.Digest;
 import com.dnawalletsdk.Cryptography.ECC;
 import com.dnawalletsdk.Data.DataUtil;
+import com.dnawalletsdk.sdk.Account;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

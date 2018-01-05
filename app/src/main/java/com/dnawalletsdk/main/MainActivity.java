@@ -1,10 +1,8 @@
 package com.dnawalletsdk.main;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dnawalletsdk.Cryptography.Digest;
 import com.dnawalletsdk.Data.DataUtil;
 import com.dnawalletsdk.Http.MyHandler;
 import com.dnawalletsdk.info.AssetInfo;
@@ -14,26 +12,17 @@ import com.dnawalletsdk.sdk.AccountAsset;
 import com.dnawalletsdk.sdk.GenerateWallet;
 import com.dnawalletsdk.sdk.NodeMsg;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.SyncStateContract.Constants;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;

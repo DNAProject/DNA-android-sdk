@@ -1,30 +1,16 @@
 package com.dnawalletsdk.sdk;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.Signature;
-import java.security.interfaces.ECPrivateKey;
-import java.security.interfaces.ECPublicKey;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Arrays;
+import com.dnawalletsdk.Cryptography.Base58;
+import com.dnawalletsdk.Cryptography.Digest;
+import com.dnawalletsdk.Cryptography.ECC;
+import com.dnawalletsdk.Data.DataUtil;
 
-import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.signers.ECDSASigner;
 import org.bouncycastle.math.ec.ECPoint;
 import org.bouncycastle.util.BigIntegers;
-import org.bouncycastle.util.encoders.Hex;
 
-import com.dnawalletsdk.Cryptography.Base58;
-import com.dnawalletsdk.Cryptography.Digest;
-import com.dnawalletsdk.Cryptography.ECC;
-import com.dnawalletsdk.Cryptography.RipeMD160;
-import com.dnawalletsdk.Data.DataUtil;
+import java.math.BigInteger;
 
 
 /**
