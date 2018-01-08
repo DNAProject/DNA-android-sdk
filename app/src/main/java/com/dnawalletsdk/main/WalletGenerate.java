@@ -3,6 +3,7 @@ package com.dnawalletsdk.main;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,27 +34,23 @@ public class WalletGenerate extends Activity  {
 		
         generateWalleFromRandom.setOnClickListener(new generateWalleFromRandom_OnClickListener());
 	}
-
     
     class generateWalleFromRandom_OnClickListener implements OnClickListener  {  
         public void onClick(View v)  {  
 
         	CreatePassword =  createPasswordEditText.getText().toString();
         	if (CreatePassword.isEmpty()) {
-                Toast.makeText(WalletGenerate.this, "请输入密码", Toast.LENGTH_SHORT).show();  
+                Toast.makeText(WalletGenerate.this, getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
                 return;
         	}
         	account = GenerateWallet.createAccount();
-        	
-            String walletUrl = GenerateWallet.createWalletDb3(account,CreatePassword);
+
+        	String url = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String walletUrl = GenerateWallet.createWalletDb3(account,CreatePassword,url);
             
-            Toast.makeText(WalletGenerate.this, "生成钱包成功，钱包路径为："+walletUrl,Toast.LENGTH_LONG).show();
+            Toast.makeText(WalletGenerate.this, getString(R.string.generate_wallet_success)+walletUrl,Toast.LENGTH_LONG).show();
           
         }
-
-
     }
-    
-
 	 
 }

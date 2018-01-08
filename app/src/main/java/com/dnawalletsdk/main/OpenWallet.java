@@ -35,10 +35,7 @@ public class OpenWallet extends Activity  {
 		transferSend = findViewById(R.id.transferSend);
 		transferAddressEditText = findViewById(R.id.transferAddress);
 		transferAssetAmountEditText = findViewById(R.id.transferAssetAmount);
-		
-		transferAddressEditText.setText("ARi5hSjiKtNN9xhchHK9maC58973bcTaX3");
-		
-		
+
 		chooseAsset.setOnClickListener(new chooseAsset_OnClickListener());
 		transferSend.setOnClickListener(new transferSend_OnClickListener());
 	}
@@ -60,7 +57,6 @@ public class OpenWallet extends Activity  {
         public void onClick(View v)  {  
 
             String transferAddress = transferAddressEditText.getText().toString();
-            System.out.println("Address:"+transferAddress);
             Double transferAssetAmount = Double.valueOf(transferAssetAmountEditText.getText().toString());
             String coin = chooseAsset.getText().toString();
             
@@ -74,9 +70,9 @@ public class OpenWallet extends Activity  {
             
             String txData = Transaction.makeTransferTransaction(asset,MainActivity.account.publicKeyEncoded,transferAddress,transferAssetAmount);
             if(txData.equals("-1")) {
-            	Toast.makeText(OpenWallet.this, "地址验证失败。", Toast.LENGTH_LONG).show();
+            	Toast.makeText(OpenWallet.this, getString(R.string.address_verification_false), Toast.LENGTH_LONG).show();
             }else if(txData.equals("-2")) {
-            	Toast.makeText(OpenWalletActivity, "没有足够的余额进行转账", Toast.LENGTH_LONG).show();
+            	Toast.makeText(OpenWalletActivity, getString(R.string.no_enough_balance), Toast.LENGTH_LONG).show();
             }
             
             SendTransfer.SignTxAndSend(txData,MainActivity.account.publicKeyEncoded,MainActivity.account.privateKey);
@@ -89,24 +85,20 @@ public class OpenWallet extends Activity  {
 	    chooseAssetDialog.setTitle(R.string.transfer_asset_name);
 	    chooseAssetDialog.setCancelable(false);
 	    chooseAssetDialog.setSingleChoiceItems(AssetName, assetNameChooseNum, new DialogInterface.OnClickListener() {
-	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
 	        	assetNameChooseNum = which;
 	        }
 	    });
 	    chooseAssetDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
 	        		chooseAsset.setText(AssetName[assetNameChooseNum]);
 	        }
 	    });
-	    chooseAssetDialog.setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() { 
-           @Override 
+	    chooseAssetDialog.setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() {
            public void onClick(DialogInterface dialog, int which) { 
            } 
        });
 	    chooseAssetDialog.show();
 	}
-    
-	 
+
 }

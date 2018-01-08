@@ -1,13 +1,8 @@
 package com.dnawalletsdk.sdk;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,19 +11,12 @@ import org.json.JSONObject;
 import com.dnawalletsdk.Http.HttpUtils;
 import com.dnawalletsdk.Http.MyHandler;
 import com.dnawalletsdk.info.AssetInfo;
+import com.dnawalletsdk.main.setting.HandlerFlag;
 import com.dnawalletsdk.main.MainActivity;
 import com.dnawalletsdk.main.MainActivity.MainHandler;
 
-import android.app.Application;
-import android.os.Handler;
 import android.os.Message;
 
-/**
- * 账户资产
- * 
- * @author 12146
- *
- */
 public class AccountAsset {
 	
 	private static AssetInfo[] assetInfo;
@@ -48,7 +36,6 @@ public class AccountAsset {
 			    		mHandler = mAPP.getHandler();
 			    		
 			    		URL url = new URL(nodeAPI+"/api/v1/asset/utxos/"+account.address);
-			    		//System.out.println(nodeAPI+"/api/v1/asset/utxos/"+account.address);
 			            connection = (HttpURLConnection) url.openConnection();  
 			            connection.setRequestMethod("GET");  
 			            connection.setConnectTimeout(8000);  
@@ -56,8 +43,7 @@ public class AccountAsset {
 			  		            	
 		        		int statusCode = connection.getResponseCode();
 
-                        if (statusCode == 200) {  
-                            //如果获取的code为200，则证明数据获取是正确的。 
+                        if (statusCode == 200) {
                             InputStream is = connection.getInputStream();  
                             String result = HttpUtils.readMyInputStream(is);  
                             
@@ -66,7 +52,7 @@ public class AccountAsset {
 
 	   			             Message msg = Message.obtain();
 	   			             msg.obj = assetInfo;
-	   			             msg.what = MainActivity.GET_ASSET_SUCCESS;
+	   			             msg.what = HandlerFlag.GET_ASSET_SUCCESS;
 	
 	   			             mHandler.sendMessage(msg);
   			            
@@ -106,9 +92,7 @@ public class AccountAsset {
 			String AssetName = assetResultObj.getString("AssetName");
 			AssetInfo Asset = new AssetInfo(AssetId,AssetName,amount,Utxo);
 			assetInfo[i] = Asset;
-//			System.out.println(assetInfo[i].assetId);
-//			System.out.println(assetInfo[i].assetName);
-//			System.out.println(assetInfo[i].amount);
+
 		}
 		return assetInfo;
 

@@ -17,7 +17,6 @@ public class Digest {
 		return sha256(sha256(value));
 	}
 	
-	
 	public static byte[] sha256(byte[] value) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");

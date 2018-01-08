@@ -8,15 +8,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dnawalletsdk.main.MainActivity" >
 
+    <Button
+        android:id="@+id/connectNode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/connect_node" />
+
     <EditText
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:hint="@string/please_input_password"
-        android:ems="10" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/chooseWallet"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/please_input_password" />
 
     <Button
         android:id="@+id/generateWallet"
@@ -31,8 +40,7 @@
         android:id="@+id/chooseWallet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/password"
-        android:layout_below="@+id/password"
+        android:layout_below="@+id/connectNode"
         android:layout_marginTop="16dp"
         android:text="@string/choose_wallet" />
 
@@ -40,18 +48,10 @@
         android:id="@+id/openWallet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/chooseWallet"
-        android:layout_below="@+id/chooseWallet"
+        android:layout_below="@+id/password"
         android:layout_marginTop="16dp"
         android:text="@string/open_wallet" />
 
-    <Button
-        android:id="@+id/connectNode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/generateWallet"
-        android:layout_below="@+id/generateWallet"
-        android:layout_marginTop="16dp"
-        android:text="@string/connect_node" />
+
 
 </RelativeLayout>

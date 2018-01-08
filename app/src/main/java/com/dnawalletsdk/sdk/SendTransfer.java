@@ -5,19 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.dnawalletsdk.Http.MyHandler;
+import com.dnawalletsdk.main.setting.HandlerFlag;
 import com.dnawalletsdk.main.MainActivity;
-import com.dnawalletsdk.main.OpenWallet;
-import android.app.Activity;
+
 import android.os.Message;
-import android.widget.Toast;
 
 import com.dnawalletsdk.main.MainActivity.MainHandler;
 
@@ -26,14 +23,11 @@ public class SendTransfer {
 	private static MyHandler mAPP = null;
 	private static MainHandler mHandler = null;
 	
-	
-	
 	public static void SignTxAndSend (String txData,byte[] publicKeyEncoded,byte[] privateKey) {
 		
 		byte[] sign = Account.signatureData(txData,privateKey);
 		String txRawData = Transaction.AddContract(txData , sign , publicKeyEncoded);
-		
-		//System.out.println(txRawData);
+
 		SendTransactionData(txRawData);
 
 	}
@@ -50,9 +44,9 @@ public class SendTransfer {
 		            connection = (HttpURLConnection) url.openConnection();
 		            connection.setRequestMethod("POST");
 		            connection.setRequestProperty("Content-type", "application/json");
-		            connection.setReadTimeout(5000);  		            // 设置请求的超时时间  
+		            connection.setReadTimeout(5000);
 		            connection.setConnectTimeout(5000);  
-		            connection.setDoOutput(true); // 发送POST请求必须设置允许输出  
+		            connection.setDoOutput(true);
 		            connection.setDoInput(true); 
 		            
 		            JSONObject jsonObject = new JSONObject();
@@ -82,7 +76,7 @@ public class SendTransfer {
 		                analyzeReturnMsg(result);
 		  
 		            } else {  
-		            	System.out.println("连接失败");
+
 		            }  
 		            
 		        } catch (IOException e) {
@@ -100,19 +94,13 @@ public class SendTransfer {
 
 		if(ErrorResult == 0) {
              Message msg = Message.obtain();
-             msg.what = MainActivity.SEND_TRANSACTION_SUCCESS ;
+             msg.what = HandlerFlag.SEND_TRANSACTION_SUCCESS ;
              mHandler.sendMessage(msg);
 		}else {
             Message msg = Message.obtain();
             msg.obj = ErrorResult;
-            msg.what = MainActivity.SEND_TRANSACTION_FALSE ;
+            msg.what = HandlerFlag.SEND_TRANSACTION_FALSE ;
             mHandler.sendMessage(msg);
 		}
-		
-		
 	}
-	
-
-
-
 }

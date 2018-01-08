@@ -17,10 +17,7 @@ import android.os.Environment;
 import android.util.Base64;
 
 public class GenerateWallet {	
-	
-    /**
-     * 账户/合约
-     */
+
     public static Account createAccount() {
         byte[] privateKey = ECC.generateKey();
         Account account = createAccount(privateKey);
@@ -87,8 +84,7 @@ public class GenerateWallet {
 		}
 	}
 
-	
-	public static String createWalletDb3(Account account , String Password) {
+	public static String createWalletDb3(Account account , String Password , String url) {
         
 		byte[] publicKeyEncode = account.publicKeyEncoded;
 		byte[] passwordKey = Digest.hash256(Password.getBytes());
@@ -108,8 +104,7 @@ public class GenerateWallet {
 		
 
 		String walletName = DataUtil.bytesToHexString(Digest.hash256(account.publicKeyEncoded)).substring(0,32);
-		//String walletUrl = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/Wallet/wallet--"+walletName+".db3";
-		String walletUrl = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/wallet--"+walletName+".db3";
+		String walletUrl = url +"/wallet--"+walletName+".db3";
 		SQLiteDatabase wallet =SQLiteDatabase.openOrCreateDatabase(walletUrl, null);
 		
 	    wallet.execSQL("CREATE TABLE Account ( PublicKeyHash BINARY NOT NULL CONSTRAINT PK_Account PRIMARY KEY, PrivateKeyEncrypted VARBINARY NOT NULL );");  

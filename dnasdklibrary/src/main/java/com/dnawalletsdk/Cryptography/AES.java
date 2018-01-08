@@ -27,10 +27,6 @@ public class AES {
 		}
 		try {
 			SecretKey secretKey = new SecretKeySpec(key, KEY_ALGORITHM);
-			//AlgorithmParameters params = AlgorithmParameters.getInstance(KEY_ALGORITHM);
-			//params.init(new IvParameterSpec(iv));
-			//Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM, "BC");
-			//cipher.init(Cipher.DECRYPT_MODE, secretKey, params);
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 			IvParameterSpec IV = new IvParameterSpec(iv);
 			cipher.init(Cipher.DECRYPT_MODE, secretKey , IV);
@@ -73,7 +69,6 @@ public class AES {
 			throw new RuntimeException(ex);
 		} finally {
 			if (key != null) {
-				//key.destroy();
 				key = null;
 			}
 		}

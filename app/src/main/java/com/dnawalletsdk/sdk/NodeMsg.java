@@ -3,10 +3,9 @@ package com.dnawalletsdk.sdk;
 import android.os.Message;
 
 import com.dnawalletsdk.Http.MyHandler;
+import com.dnawalletsdk.main.setting.HandlerFlag;
 import com.dnawalletsdk.main.MainActivity;
 import com.dnawalletsdk.main.MainActivity.MainHandler;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -28,7 +27,7 @@ public class NodeMsg {
 
 	private static MainHandler mHandler = null;
 	
-	public static String getNodeHeight(final String nodeAPI) {		
+	public static String getNodeHeight(final String nodeAPI ) {
 		new Thread(new Runnable() {
 			public void run() {  
 			        HttpURLConnection connection = null;  
@@ -42,8 +41,7 @@ public class NodeMsg {
 			            connection.setConnectTimeout(8000);  
 			            connection.setReadTimeout(8000);  
 			  
-			            InputStream in = connection.getInputStream();  
-			            // 下面对获取到的输入流进行读取  
+			            InputStream in = connection.getInputStream();
 			            BufferedReader reader = new BufferedReader(new  InputStreamReader(in));  
 			            StringBuilder response = new StringBuilder();  
 			            String line;  
@@ -51,14 +49,10 @@ public class NodeMsg {
 			                response.append(line);  
 			            }  
 						String nodeMsg = response.toString();
-						JSONObject nodeMsgObj =  new JSONObject(nodeMsg);
-						int error = nodeMsgObj.getInt("Error");
-						System.out.println("nodeMsg:"+nodeMsg);
 
 						Message msg = Message.obtain();
-						msg.obj = error;
-						msg.what = MainActivity.GET_NODEHIGHT;
-
+						msg.obj = nodeMsg;
+						msg.what = HandlerFlag.GET_NODEHIGHT;
 						mHandler.sendMessage(msg);
 			            	
 			        } catch (Exception e) {  
@@ -67,8 +61,7 @@ public class NodeMsg {
 						int error = 1;
 						Message msg = Message.obtain();
 						msg.obj = error;
-						msg.what = MainActivity.GET_NODEHIGHT;
-
+						msg.what = HandlerFlag.GET_NODEHIGHT_FALSE;
 						mHandler.sendMessage(msg);
 
 			        } finally {  
@@ -77,9 +70,7 @@ public class NodeMsg {
 			                }  
 			        }  
 			    }  
-			}).start();  
-		
-		
+			}).start();
 		return null;
 	}
 }

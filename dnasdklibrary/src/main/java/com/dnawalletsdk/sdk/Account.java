@@ -93,7 +93,6 @@ public class Account {
 	
     /**
      * Signature transaction unsigned Data.
-     * 生成签名。
      *
      * @param String txData
 	 * @param byte[] privateKey

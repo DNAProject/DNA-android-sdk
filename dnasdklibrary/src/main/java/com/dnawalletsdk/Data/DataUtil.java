@@ -7,16 +7,16 @@ import android.text.TextUtils;
 public class DataUtil {
 
 	 /**
-	  * 类标记
+	  * class tag
 	  */
 	 private static final String TAG = "DataUtil";
 
 	 
     /** 
-     * 10进制byte[]转换成16进制字符串 
-     *  
-     * @param src 
-     * @return 
+     * The decimal byte[] is converted into a hexadecimal string
+     *
+     * @param src The decimal byte[]
+     * @return {string} The hexadecimal string
      */  
     public static String bytesToHexString(byte[] src) {  
         StringBuilder stringBuilder = new StringBuilder("");  
@@ -35,10 +35,10 @@ public class DataUtil {
     } 
     
     /**
-     * 16进制的字符串表示转成10进制字节数组
+     * The hexadecimal string is converted into a decimal byte[]
      *
-     * @param hexString 16进制格式的字符串            
-     * @return 转换后的字节数组
+     * @param hexString The hexadecimal string
+     * @return {byte[]} The decimal byte[]
      **/
     public static byte[] HexStringToByteArray(String hexString) {
         if (TextUtils.isEmpty(hexString))
@@ -47,7 +47,7 @@ public class DataUtil {
         hexString = hexString.toLowerCase();
         final byte[] byteArray = new byte[hexString.length() / 2];
         int k = 0;
-        for (int i = 0; i < byteArray.length; i++) {//因为是16进制，最多只会占用4位，转换成字节需要两个16进制的字符，高位在先
+        for (int i = 0; i < byteArray.length; i++) {
             byte high = (byte) (Character.digit(hexString.charAt(k), 16) & 0xff);
             byte low = (byte) (Character.digit(hexString.charAt(k + 1), 16) & 0xff);
             byteArray[i] = (byte) (high << 4 | low);
@@ -61,11 +61,9 @@ public class DataUtil {
 		    if (num.length() % 2 == 1) {
 		        num = '0' + num;
 		    }
-
 		    for (int i = num.length() ; i < length ; i++) {
 		        num = '0' + num;
 		    }
-
 		    byte[] data = reverseArray(HexStringToByteArray(num));
 
 		    return bytesToHexString(data);
@@ -76,26 +74,23 @@ public class DataUtil {
 		    for (int i = 0 ; i < arr.length ; i++) {
 		        result[i] = arr[arr.length - 1 - i];
 		    }
-
 		    return result;
 		}
 	 
 	 /**
-	  * 补全数字串前的0
+	  * completing the total number by "0"
 	  *
-	  * @param num 数字串
-	  * @param length 需要多长
+	  * @param num
+	  * @param length
 	  * @return {string}
 	  */
 	 public static String prefixInteger(String num,int length) {
 	        String result = "";
-	        // 0 代表前面补充0       
-	        // d 代表参数为正数型 
+	        // 0 stands for completing the total number by "0"
+	        // d stands for positive number
 	        result = String.format("%0" + length + "d", Integer.parseInt(num) );
 
 	        return result;
 	    }
-
-
     
 }

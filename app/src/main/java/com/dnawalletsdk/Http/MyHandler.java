@@ -8,21 +8,19 @@ import com.dnawalletsdk.main.MainActivity.MainHandler;
 import android.app.Application;
 
 /**
- * 自己实现Application，实现数据共享
- * 
- * @author mark
- *
+ * Make Application，Implement data sharing
  */
 public class MyHandler extends Application {
-	// 共享变量
+
+	// Shared variable
 	private MainHandler handler = null;
 	
-	// set方法
+	// set function
 	public void setHandler(MainHandler handler) {
 		this.handler = handler;
 	}
 	
-	// get方法
+	// get function
 	public MainHandler getHandler() {
 		return handler;
 	}

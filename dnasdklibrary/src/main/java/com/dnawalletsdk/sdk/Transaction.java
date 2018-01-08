@@ -1,8 +1,5 @@
 package com.dnawalletsdk.sdk;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,11 +9,7 @@ import com.dnawalletsdk.Data.DataUtil;
 import com.dnawalletsdk.info.AssetInfo;
 import com.dnawalletsdk.info.TransferInputData;
 import com.dnawalletsdk.info.TransferLengthData;
-import com.dnawalletsdk.main.MainActivity;
 
-import android.app.Activity;
-import android.provider.ContactsContract.Contacts.Data;
-import android.widget.Toast;
 
 public class Transaction {
 
@@ -48,10 +41,10 @@ public class Transaction {
 	 * 1			  代码长度 code
 	 * 代码实际长度     代码：公钥
 	 *
-	 * @param $coin
-	 * @param $publicKeyEncoded
-	 * @param $toAddress
-	 * @param $Amount
+	 * @param coin
+	 * @param publicKeyEncoded
+	 * @param toAddress
+	 * @param Amount
 	 *
 	 * @returns {*} : TxUnsignedData
 	 */
@@ -100,7 +93,7 @@ public class Transaction {
 		
 		Double inputAmount = inputData.getCoin_amount();
 		
-		//Adjust the accuracy. (调整精度之后的数据）
+		//Adjust the accuracy.
 		int accuracyVal = 100000000;
 		double newOutputAmount = transferAssetAmount*accuracyVal ;
 		double newInputAmount = inputAmount*accuracyVal - newOutputAmount;
@@ -111,7 +104,7 @@ public class Transaction {
 	     */
 		String type = "80";
 		String version = "00";
-		//自定义属性，Attributes
+		//Custom Attributes
 		String transactionAttrNum = "01";
 		String transactionAttrUsage = "00";
 		String transactionAttrData =  DataUtil.bytesToHexString(Integer.toString((int)(Math.random()*99999999)).getBytes());
@@ -121,7 +114,7 @@ public class Transaction {
 		String data = type + version + transactionAttrNum + transactionAttrUsage + transactionAttrDataLen+ transactionAttrData + referenceTransactionData ;
 		
 		//OUTPUT
-		String transactionOutputNum = "01";//无找零
+		String transactionOutputNum = "01";//No change
 		String transactionOutputAssetID = DataUtil.bytesToHexString(DataUtil.reverseArray(DataUtil.HexStringToByteArray(Asset.getAssetId())));
 		String transactionOutputValue = DataUtil.numStoreInMemory(Long.toHexString((long)newOutputAmount),16);
 		String transactionOutputProgramHash = DataUtil.bytesToHexString(programHash);
@@ -130,11 +123,11 @@ public class Transaction {
 			data =data + transactionOutputNum +  transactionOutputAssetID + transactionOutputValue + transactionOutputProgramHash;
 			//System.out.println(data);
 		}else {
-			transactionOutputNum = "02" ; //有找零
-			//Transfer to someone 发给他人
+			transactionOutputNum = "02" ; //Have the change
+			//Transfer to someone
 			data =data + transactionOutputNum +  transactionOutputAssetID + transactionOutputValue + transactionOutputProgramHash;
 
-			//Change to yourself 找零给自己
+			//Change to yourself
 			String transactionOutputValue_me  =DataUtil.numStoreInMemory(Long.toHexString((long)newInputAmount),16);
 			String transactionOutputProgramHash_me = DataUtil.bytesToHexString(myProgramHash);
 			data = data + transactionOutputAssetID + transactionOutputValue_me + transactionOutputProgramHash_me;
@@ -290,7 +283,9 @@ public class Transaction {
 	
 
 
-	/**构成签名结构
+	/**
+	 * Signature structure
+	 * 构成签名结构
 	 *
 	 *  * 数据格式：
 	 * 字节            内容
@@ -302,9 +297,9 @@ public class Transaction {
 	 * 1              协议数据长度
 	 * 脚本数据长度   签名脚本数据
 	 *
-	 * @param $txData
-	 * @param $sign
-	 * @param $publicKeyEncoded
+	 * @param txData
+	 * @param sign
+	 * @param publicKeyEncoded
 	 * @return {string}
 	 * @constructor
 	 */
