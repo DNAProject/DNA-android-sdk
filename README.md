@@ -1,7 +1,6 @@
-<<<<<<< HEAD
-﻿# DNA : JavaScript-SDK
+﻿﻿# DNA : Android-SDK
 
-> Onchain DNA项目的JS-SDK。
+> Onchain DNA项目的Android-SDK。
   
 ## Demo:
 DNAWalletSDK.apk
@@ -54,11 +53,41 @@ public static Account createAccount() {
  * 新建一个账户。
  *
  * @param byte[] privateKey
- *
- * @return Account account
+  *
+  * @return Account account
+  */
+ public static Account createAccount(byte[] privateKey) {
+     return account;
+ }
+```
+- #### Decrypt the wallet - 解密钱包
+```angular2html
+/**
+ * Decrypt the wallet which file is .db3
+ * 解密.db3类型的钱包
+ * @param SQLiteDatabase wallet
+ * @param String Password
+ * 
+ * @return String privateKeyHexString
  */
-public static Account createAccount(byte[] privateKey) {
-    return account;
+public static String decryptWallet(SQLiteDatabase wallet, String Password) {
+    return privateKeyHexString;
+}
+```
+
+- #### Generate the wallet - 生成钱包
+```angular2html
+/**
+ * Generate the wallet which file is .db3
+ * 生成.db3类型的钱包
+ * @param Account account
+ * @param String Password
+ * @param String url
+ * 
+ * @return String walletUrl
+ */
+public static String createWalletDb3(Account account , String Password , String url) {
+    return walletUrl;
 }
 ```
 
@@ -145,7 +174,3 @@ public static String getNodeHeight(final String nodeAPI) {};
  */
 public static void SendTransactionData(final String txRawData) {};
 ```
-=======
-# DNASDKAndroid
-The DNA SDK of Android
->>>>>>> d9a7ae504fc6d1dc9cf5b375c64cc310cbf26a15

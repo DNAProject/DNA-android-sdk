@@ -29,7 +29,7 @@ public class GenerateWallet {
         Account account = new Account(privateKey);
         return account;
     }
-    
+
 	public static String decryptWallet(SQLiteDatabase wallet, String Password) {
 		try {
 			byte[] PasswordHash1 = Digest.sha256(Password.getBytes());
