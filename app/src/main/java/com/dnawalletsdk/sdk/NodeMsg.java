@@ -1,5 +1,13 @@
 package com.dnawalletsdk.sdk;
 
+import android.os.Message;
+
+import com.dnawalletsdk.Http.MyHandler;
+import com.dnawalletsdk.main.MainActivity;
+import com.dnawalletsdk.main.MainActivity.MainHandler;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,16 +23,20 @@ public class NodeMsg {
 	public String webapi_host;
 	public String webapi_port;
 	public String node_type;
-	
+
+	private static MyHandler mAPP = null;
+
+	private static MainHandler mHandler = null;
 	
 	public static String getNodeHeight(final String nodeAPI) {		
-		new Thread(new Runnable() {  
-			@Override  
+		new Thread(new Runnable() {
 			public void run() {  
 			        HttpURLConnection connection = null;  
-			        try {  
-			    		
-			    		URL url = new URL(nodeAPI+"/api/v1/block/height?auth_type=getblockheight");
+			        try {
+						mAPP = (MyHandler) MainActivity.Main.getApplication();
+						mHandler = mAPP.getHandler();
+
+						URL url = new URL(nodeAPI+"/api/v1/block/height?auth_type=getblockheight");
 			            connection = (HttpURLConnection) url.openConnection();  
 			            connection.setRequestMethod("GET");  
 			            connection.setConnectTimeout(8000);  
@@ -38,14 +50,29 @@ public class NodeMsg {
 			            while ((line = reader.readLine()) != null) {  
 			                response.append(line);  
 			            }  
-			            	String msg = response.toString();  
-			            	//System.out.println("nodeMsg:"+msg);
+						String nodeMsg = response.toString();
+						JSONObject nodeMsgObj =  new JSONObject(nodeMsg);
+						int error = nodeMsgObj.getInt("Error");
+						System.out.println("nodeMsg:"+nodeMsg);
+
+						Message msg = Message.obtain();
+						msg.obj = error;
+						msg.what = MainActivity.GET_NODEHIGHT;
+
+						mHandler.sendMessage(msg);
 			            	
 			        } catch (Exception e) {  
-			            e.printStackTrace();  
-			  
+			            e.printStackTrace();
+
+						int error = 1;
+						Message msg = Message.obtain();
+						msg.obj = error;
+						msg.what = MainActivity.GET_NODEHIGHT;
+
+						mHandler.sendMessage(msg);
+
 			        } finally {  
-			                if (connection != null) {  
+			                if (connection != null) {
 			                    connection.disconnect();  
 			                }  
 			        }  

@@ -14,4 +14,5 @@
     <string name="ok">确定</string>
     <string name="cancle">取消</string>
     <string name="choose_wallet">请选择钱包</string>
+    <string name="connect_node">连接节点</string>
 </resources>

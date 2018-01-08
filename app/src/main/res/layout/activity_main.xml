@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/openWallet"
         android:layout_below="@+id/openWallet"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:text="@string/generate_wallet" />
 
     <Button
@@ -42,7 +42,16 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/chooseWallet"
         android:layout_below="@+id/chooseWallet"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="16dp"
         android:text="@string/open_wallet" />
+
+    <Button
+        android:id="@+id/connectNode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/generateWallet"
+        android:layout_below="@+id/generateWallet"
+        android:layout_marginTop="16dp"
+        android:text="@string/connect_node" />
 
 </RelativeLayout>

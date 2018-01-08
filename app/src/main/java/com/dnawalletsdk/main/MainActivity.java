@@ -1,7 +1,10 @@
 package com.dnawalletsdk.main;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.dnawalletsdk.Data.DataUtil;
 import com.dnawalletsdk.Http.MyHandler;
@@ -29,12 +32,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class MainActivity extends Activity  {
 
 	private Button openWallet;
 	private Button generateWallet;
 	private EditText passwordEditText;
 	private Button chooseWallet;
+	private Button connectNode;
 
 	
 	private String Password;
@@ -44,10 +51,13 @@ public class MainActivity extends Activity  {
 	
 	public static Account account;
 	public static AssetInfo assets[];
+	public static NodeMsg Node ;
 	
 	public static final int GET_ASSET_SUCCESS = 1;
+	public static final int GET_NODEHIGHT = 2;
 	public static final int SEND_TRANSACTION_SUCCESS = 40000;
 	public static final int SEND_TRANSACTION_FALSE = 50000;
+
 
 	private MainHandler handler = null;
 	
@@ -69,11 +79,12 @@ public class MainActivity extends Activity  {
 		generateWallet = findViewById(R.id.generateWallet);
 		chooseWallet = findViewById(R.id.chooseWallet);
         passwordEditText = findViewById(R.id.password);
-       
+		connectNode = findViewById(R.id.connectNode);
          
 		openWallet.setOnClickListener(new openWallet_OnClickListener());
 		generateWallet.setOnClickListener(new generateWallet_OnClickListener());
 		chooseWallet.setOnClickListener(new chooseWallet_OnClickListener());
+		connectNode.setOnClickListener(new connectNode_OnClickListener());
 		
 		permissionApplication(); 
 	}
@@ -138,8 +149,7 @@ public class MainActivity extends Activity  {
         	
         	account =GenerateWallet.createAccount(DataUtil.HexStringToByteArray(privateKeyHexString));
         	
-        	//获取节点高度
-        	NodeMsg.getNodeHeight(nodeAPI);
+
         	//获取余额
         	AccountAsset.getUpspent(nodeAPI,account);
         	
@@ -160,15 +170,54 @@ public class MainActivity extends Activity  {
         }  
     }
     
-    class chooseWallet_OnClickListener implements OnClickListener  {  
-        public void onClick(View v)  {  
+    class chooseWallet_OnClickListener implements OnClickListener  {
+		public void onClick(View v)  {
 
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);  
-            intent.setType("*/*");//设置类型，这里是任意类型，任意后缀的可以这样写。  
-            intent.addCategory(Intent.CATEGORY_OPENABLE);  
-            startActivityForResult(intent,1);  
-        }  
-    }
+			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+			intent.setType("*/*");//设置类型，这里是任意类型，任意后缀的可以这样写。
+			intent.addCategory(Intent.CATEGORY_OPENABLE);
+			startActivityForResult(intent,1);
+		}
+	}
+
+	class connectNode_OnClickListener implements OnClickListener  {
+		public void onClick(View v)  {
+			//获取节点高度
+			Node = chooseNode();
+			NodeMsg.getNodeHeight(Node.restapi_host+":"+Node.restapi_port);
+		}
+	}
+
+	private NodeMsg chooseNode(){
+		NodeMsg node = new NodeMsg();
+		try {
+			InputStreamReader isr = new InputStreamReader(getAssets().open("wallet-conf.json"),"UTF-8");
+			BufferedReader br = new BufferedReader(isr);
+			String line;
+			StringBuilder builder = new StringBuilder();
+			while((line = br.readLine()) != null){
+				builder.append(line);
+			}
+			br.close();
+			isr.close();
+			JSONObject json = new JSONObject(builder.toString());
+			JSONArray array = json.getJSONArray("host_info");
+			//JSONObject nodeMsg = array.getJSONObject((int)(Math.random()*(10-1+1)));
+			JSONObject nodeMsg = array.getJSONObject(5);
+			node.hostName = nodeMsg.getString("hostName");
+			node.hostProvider = nodeMsg.getString("hostProvider");
+			node.restapi_host = nodeMsg.getString("restapi_host");
+			node.restapi_port = nodeMsg.getString("restapi_port");
+			node.webapi_host = nodeMsg.getString("webapi_host");
+			node.webapi_port = nodeMsg.getString("webapi_port");
+			node.node_type = nodeMsg.getString("node_type");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return node;
+	}
+
     //获得选择的.db3
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
         if (resultCode == Activity.RESULT_OK) {  
@@ -206,6 +255,16 @@ public class MainActivity extends Activity  {
             	int ErrorCode = (Integer) msg.obj;
             	Toast.makeText(OpenWallet.OpenWalletActivity, "转账失败，错误代码为："+ ErrorCode,Toast.LENGTH_SHORT).show();
             	break;
+
+			case GET_NODEHIGHT :
+				int error = (Integer) msg.obj;
+				if (error == 0) {
+					Toast.makeText(MainActivity.this, "获取节点高度成功", Toast.LENGTH_SHORT).show();
+				}else{
+					Toast.makeText(MainActivity.this, "获取节点高度失败", Toast.LENGTH_SHORT).show();
+				}
+				break;
+
             }
 		}
 	}
