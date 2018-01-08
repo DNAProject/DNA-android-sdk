@@ -3,7 +3,7 @@
 > Onchain DNA项目的Android-SDK。
   
 ## Demo:
-DNAWalletSDK.apk
+DNASDKAndroid.apk
 
 
 
