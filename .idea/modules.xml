@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DNASDKAndroid.iml" filepath="$PROJECT_DIR$/DNASDKAndroid.iml" />
-      <module fileurl="file://E:\AndroidStudioWorkspace\DNASDKAndroid\DNAWalletSDK.iml" filepath="E:\AndroidStudioWorkspace\DNASDKAndroid\DNAWalletSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DNA-android-sdk.iml" filepath="$PROJECT_DIR$/DNA-android-sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/DNA-android-sdk-app.iml" filepath="$PROJECT_DIR$/app/DNA-android-sdk-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dnasdklibrary/DNA-android-sdk-dnasdklibrary.iml" filepath="$PROJECT_DIR$/dnasdklibrary/DNA-android-sdk-dnasdklibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dnasdklibrary/dnasdklibrary.iml" filepath="$PROJECT_DIR$/dnasdklibrary/dnasdklibrary.iml" />
     </modules>
